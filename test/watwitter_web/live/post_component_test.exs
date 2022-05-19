@@ -16,5 +16,14 @@ defmodule WatwitterWeb.PostComponentTest do
     assert html =~ DateHelpers.format_short(post.inserted_at)
   end
 
-  
+  test "renders author's name, username, avatar_url" do
+    author = insert(:user)
+    post = insert(:post, user: author)
+
+    html = render_component(PostComponent, post: post)
+
+    assert html =~ author.name
+    assert html =~ "@#{author.username}"
+    assert html =~ author.avatar_url
+  end
 end
